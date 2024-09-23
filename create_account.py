@@ -10,7 +10,7 @@ if __name__ == '__main__':
     data['sdt']=data['sdt'].apply(add_0_sdt)
     cnt = 0
 
-    for row in data.iterrows():
+    for row in reversed(list(data.iterrows())):
 
         try:
             driver=configure_driver()

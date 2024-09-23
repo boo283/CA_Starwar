@@ -137,10 +137,10 @@ def create_account(driver, personal_data):
 
         # Agree terms
         driver.find_element(By.CSS_SELECTOR, checkbox_confirm_ele).click()
-        sleep(250)
+        sleep(100)
         # Sign Up
         driver.find_element(By.CSS_SELECTOR, signup_ele).click()
-        sleep(5) #waiting for create successfully
+        sleep(25) #waiting for create successfully
 
         # Tmp
         # cluster_ele = "span[class='select2-selection__rendered'][id='select2-clusterId-container']"
