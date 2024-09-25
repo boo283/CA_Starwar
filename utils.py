@@ -240,6 +240,7 @@ def answer_quiz(driver, quiz_number):
 
 def final_submit(driver):
     driver.find_element(By.CSS_SELECTOR, "div.flex.w-full.justify-center.items-center a").click()
+    time.sleep(3)
     driver.find_element(By.CSS_SELECTOR, "button[id='testFormBtn']").click()
 
 def pipeline(driver, email, password):

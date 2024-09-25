@@ -6,12 +6,13 @@ import pandas as pd
 if __name__ == '__main__':
 
     data = pd.read_excel("data.xlsx")
-    data = data[data['created'] == 0]
+    #data = data[data['created'] == 0]
     data['sdt']=data['sdt'].apply(add_0_sdt)
     cnt = 0
 
     for row in reversed(list(data.iterrows())):
-
+        if data.loc[row[0], 'created'] == 1 or data.loc[row[0], 'created'] == '1':
+            continue
         try:
             driver=configure_driver()
 
@@ -29,6 +30,7 @@ if __name__ == '__main__':
             else:
                 print("Failed")
                 time.sleep(3)
+                data.loc[row[0], 'created'] = 1
                 with open('su_failed.txt', 'a') as f:
                     f.write(f"{data.loc[row[0], 'masv']}\n")
 
@@ -42,5 +44,5 @@ if __name__ == '__main__':
             break
         except:
             continue
-
+    data.to_excel("new_data.xlsx", index=False)       
 
