@@ -19,6 +19,22 @@ BANG_XOA_DAU = str.maketrans(
     "ÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÈÉẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴáàảãạăắằẳẵặâấầẩẫậđèéẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵ",
     "A"*17 + "D" + "E"*11 + "I"*5 + "O"*17 + "U"*11 + "Y"*5 + "a"*17 + "d" + "e"*11 + "i"*5 + "o"*17 + "u"*11 + "y"*5
 )
+def check_lg(driver, usr, pw):
+    login(driver, usr, pw)
+    time.sleep(1)
+    try:
+        alert = driver.find_element(By.CSS_SELECTOR, 'div[class="alert-danger text-red-600"]').text
+        if alert.strip() == 'Sai mật khẩu, vui lòng kiểm tra lại.': #sai mk
+            return -1
+        elif alert.strip() == 'Tài khoản không tồn tại trên hệ thống, vui lòng kiểm tra lại.':
+            return 0
+        else:
+            driver.get('https://starawards.vn/logout')
+            return 1
+    except:
+        pass
+    driver.get('https://starawards.vn/logout')  
+    return 2
 def zoom_out_browser():
     # Đợi một chút để đảm bảo trình duyệt đã mở hoàn toàn
     time.sleep(2)
@@ -132,12 +148,12 @@ def create_account(driver, personal_data):
         fill_in_in4(driver, personal_email_ele, personal_data['email'])
         #sleep(3)
         # Password and Retype - Ramdomly Gen - At least 8 char
-        fill_in_in4(driver, password_ele, personal_data['password'])
-        fill_in_in4(driver, confirm_password_ele, personal_data['password'])
+        fill_in_in4(driver, password_ele, "12345678aB")
+        fill_in_in4(driver, confirm_password_ele, "12345678aB")
 
         # Agree terms
         driver.find_element(By.CSS_SELECTOR, checkbox_confirm_ele).click()
-        sleep(100)
+        sleep(50)
         # Sign Up
         driver.find_element(By.CSS_SELECTOR, signup_ele).click()
         sleep(25) #waiting for create successfully
@@ -177,7 +193,7 @@ def login(driver, email, password):
     driver.find_element(By.CSS_SELECTOR, "input[type='text'][name='email']").send_keys(email)
 
     #fill in password
-    driver.find_element(By.CSS_SELECTOR, "input[type='password'][name='password']").send_keys(password)
+    driver.find_element(By.CSS_SELECTOR, "input[type='password'][name='password']").send_keys("12345678aB")
     #click login
     time.sleep(3)
     driver.find_element(By.CSS_SELECTOR, "button[type='submit'][name='loginBtnSubmit']").click()

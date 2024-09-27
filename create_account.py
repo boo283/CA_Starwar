@@ -13,6 +13,8 @@ if __name__ == '__main__':
     for row in reversed(list(data.iterrows())):
         if data.loc[row[0], 'created'] == 1 or data.loc[row[0], 'created'] == '1':
             continue
+        if data.loc[row[0], 'login_test'] == -1 or data.loc[row[0], 'login_test'] == '-1':
+            continue
         try:
             driver=configure_driver()
 
